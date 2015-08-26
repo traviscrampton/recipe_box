@@ -9,7 +9,7 @@
   <p>View All THe Tags!</p>
   <ul>
     <% @tags.each() do |tag| %>
-      <li> <a href="/tags/<%= tag.id() %>"><%= tag.description() %></a> </li>
+      <li> <a href="/tags/<%= tag.id() %>"><%= tag.description() %></a> <a class = "remover" href="/tags/<%= tag.id() %>/delete">Delete <%= tag.description() %></a></li>
     <% end %>
 
   </ul>
@@ -21,3 +21,5 @@
   <input type="text" name="description" id="description">
   <button type="submit">Add Tag</button>
 </form>
+
+<a href="/clear/tags">Clear all tags!</a>

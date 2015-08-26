@@ -1,0 +1,34 @@
+<h2>Ingredient: <%= @ingredient.kind() %></h2>
+<hr>
+
+<form action="/ingredients/<%= @ingredient.id %>/rename" method="post">
+  <input name="_method" type="hidden" value="patch">
+  <label for="kind">Enter a new kind:</label>
+  <input id="kind" name="kind" type="text">
+
+  <button type="submit">Update</button>
+</form>
+
+<form action="/ingredients/<%= @ingredient.id %>/delete" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete Ingredient</button>
+</form>
+
+<hr>
+
+
+<% if @ingredient.recipes.any? %>
+  <h3>Here are the recipes currently that use this ingredient:</h3>
+  <ul>
+    <% @ingredient.recipes.each() do |recipe_ingredient| %>
+      <li> <a href="/recipes/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.name() %></a> </li>
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p><strong>There are currently no recipes that use this ingredient.</strong></p>
+    <br>
+
+<% end %>

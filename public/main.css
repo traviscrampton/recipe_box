@@ -1,0 +1,21 @@
+/***********************
+-------Global--------
+***********************/
+body{
+  padding-top: 170px;
+  height: 850px;
+  background: linear-gradient(#fff, transparent 90%),
+  linear-gradient(0deg, #fff, transparent),
+  #fff url('http://www.dolcemeridiano.com/wp-content/uploads/2014/09/Depositphotos_20179189_original.jpg') no-repeat center;
+  background-size: cover;
+  text-align:center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.remover{
+  color:red;
+  margin-left:2rem;
+}

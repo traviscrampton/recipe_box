@@ -9,7 +9,7 @@
   <p>View All The Ingredients!</p>
   <ul>
     <% @ingredients.each() do |ingredient| %>
-      <li> <a href="/ingredients/<%= ingredient.id() %>"><%= ingredient.kind() %></a> </li>
+      <li> <a href="/ingredients/<%= ingredient.id() %>"><%= ingredient.kind() %></a> <a class = "remover" href="/ingredients/<%= ingredient.id() %>/delete">Delete <%= ingredient.kind() %></a></li>
     <% end %>
 
   </ul>
@@ -21,3 +21,5 @@
   <input type="text" name="kind" id="kind">
   <button type="submit">Add Ingredient</button>
 </form>
+
+<a href="/clear/ingredients">Clear all ingredients!</a>

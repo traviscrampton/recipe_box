@@ -1,4 +1,19 @@
 <h2> <%= @recipe.name() %></h2>
+<br>
+<h3>It is currently rated as <%= @recipe.rating() %> stars </h3>
+<form id="add_rating" action="/recipes/<%= @recipe.id() %>/rating" method="post">
+  <input type="radio" name="rating" value="1" checked> *
+  <br>
+  <input type="radio" name="rating" value="2"> **
+  <br>
+  <input type="radio" name="rating" value="3"> ***
+  <br>
+  <input type="radio" name="rating" value="4"> ****
+  <br>
+  <input type="radio" name="rating" value="5"> *****
+  <br>
+  <button type="submit">Rate</button>
+</form>
 <hr>
 
 <% if @recipe.tags.any? %>
@@ -18,10 +33,10 @@
 <% end %>
 
 <p>Add a tag to this recipe:<p>
-<form id="add_tag_id" action="/recipes/<%= @recipe.id() %>" method="post">
+<form id="add_tag_id" action="/recipes/<%= @recipe.id() %>/rate" method="post">
   <input name="_method" type="hidden" value="patch">
   <input type="hidden" name="recipe_id" id="recipe_id" value="<%= @recipe.id() %>">
-  <label for="tag_id">Select atag:  </label>
+  <label for="tag_id">Select a tag:  </label>
     <br>
   <select id="tag_id" name="tag_id">
     <option value=""></option>
@@ -47,6 +62,14 @@
       <% end %>
     </select>
 
+    <select id="serving" name="serving">
+      <% servings = ["lb.","cups","tablespoons","ml.","pieces"] %>
+
+      <% servings.each() do |measurment| %>
+        <option value=<%= measurment %>> <%= measurment %> </option>
+      <% end %>
+    </select>
+
     <label for="amount">Amount of Ingredient:  </label>
     <input type="text" name="amount" id="amount">
   </fieldset>
@@ -58,7 +81,7 @@
   <h3>Here are the ingredients currently assigned to this recipe:</h3>
   <ul>
     <% @recipe.ingredients.each() do |recipe_ingredient| %>
-      <li> <a href="/ingredients/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.amount() %> of <%= recipe_ingredient.kind() %></a> </li>
+      <li> <a href="/ingredients/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.amount() %> <%= recipe_ingredient.serving() %> of <%= recipe_ingredient.kind() %></a> </li>
 
     <% end %>
   </ul>
@@ -69,3 +92,23 @@
     <br>
 
 <% end %>
+<br>
+
+<h3>Add the instructions to this recipe:</h3>
+<form id="add_instructions" action="/recipes/<%= @recipe.id() %>/instructions" method="post">
+  <input name="_method" type="hidden" value="post">
+  <input type="hidden" name="instruction_id" id="instruction_id" value="<%= @recipe.id() %>">
+  <label for="instruction_id">Type it out here:  </label>
+  <br>
+  <textarea type="text" name="instructions" id="instructions" rows="4" cols="50">
+    Here goes the gruesome process of creating that monstrosity.
+  </textarea>
+  <br>
+  <button type="submit">Save Instructions</button>
+</form>
+
+<br>
+<br>
+<h3>Your current recipe for <%= @recipe.name %> is:</h3>
+<br>
+<%= @recipe.instructions %>
