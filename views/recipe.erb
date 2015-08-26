@@ -5,7 +5,8 @@
   <h3>Here are the tags currently assigned to this recipe:</h3>
   <ul>
     <% @recipe.tags.each() do |recipe_tag| %>
-      <li><%= recipe_tag.name %></li>
+      <li> <a href="/tags/<%= recipe_tag.id() %>"><%= recipe_tag.description() %></a> </li>
+
     <% end %>
   </ul>
 
@@ -30,3 +31,41 @@
   </select>
   <button type="submit">Submit</button>
 </form>
+
+<p>Add ingredients to this recipe:<p>
+<form id="add_ingredient_id" action="/recipes/<%= @recipe.id() %>/ingredients" method="post">
+  <input name="_method" type="hidden" value="patch">
+  <input type="hidden" name="recipe_id" id="recipe_id" value="<%= @recipe.id() %>">
+  <label for="ingredient_id">Select an ingredient:  </label>
+    <br>
+
+  <fieldset>
+    <select id="ingredient" name="ingredient">
+      <option value=""></option>
+      <% @ingredients.each() do |ingredient| %>
+        <option value="<%= ingredient.id() %>"><%= ingredient.kind() %></option>
+      <% end %>
+    </select>
+
+    <label for="amount">Amount of Ingredient:  </label>
+    <input type="text" name="amount" id="amount">
+  </fieldset>
+
+  <button type="submit">Submit</button>
+</form>
+
+<% if @recipe.ingredients.any? %>
+  <h3>Here are the ingredients currently assigned to this recipe:</h3>
+  <ul>
+    <% @recipe.ingredients.each() do |recipe_ingredient| %>
+      <li> <a href="/ingredients/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.amount() %> of <%= recipe_ingredient.kind() %></a> </li>
+
+    <% end %>
+  </ul>
+
+<% else %>
+
+    <p><strong>There are currently no ingredients assigned to this recipe.</strong></p>
+    <br>
+
+<% end %>

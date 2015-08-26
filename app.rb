@@ -40,12 +40,27 @@ end
 
 
 #############################
+###---Ingredients-Page---####
+#############################
+get('/ingredients') do
+  @ingredients = Ingredient.all()
+  erb(:ingredients)
+end
+
+post("/ingredients") do
+  kind = params.fetch("kind")
+  Ingredient.create({:kind => kind, :amount => nil})
+  redirect("/ingredients")
+end
+
+
+#############################
 ######---Tag-Page---#########
 #############################
 get('/tags/:id') do
   @tag = Tag.find(params.fetch("id").to_i())
-  if @tag.recipe_id
-    @recipe = Recipe.find(@tag.recipe_id)
+  if @tag.recipes
+    @recipe = @tag.recipes
   else
     @recipe = nil
   end
@@ -55,7 +70,57 @@ end
 
 patch("/tags/:id") do
   recipe_id = params.fetch("recipe_id").to_i()
+  recipe = Recipe.find(recipe_id)
   @tag = Tag.find(params.fetch("id").to_i())
-  @tag.update({:recipe_id => recipe_id})
+  # @tag.update({:recipe_ids => [recipe_id]})
+  @tag.recipes.push(recipe)
+  redirect back
+end
+
+delete('/tags/:id/delete') do
+	@tag = Tag.find(params['id'].to_i)
+	@tag.destroy
+	@tags = Tag.all()
+	erb(:tags)
+end
+
+patch ('/tags/:id/rename') do
+	@tag = Tag.find(params['id'].to_i)
+  @tag.update({description: params["description"]})
+	@tags = Tag.all()
+	redirect back
+end
+
+#############################
+####---Recipe-Page---########
+#############################
+get('/recipes/:id') do
+  @recipe = Recipe.find(params.fetch("id").to_i())
+  if @recipe.tags
+    @tag = @recipe.tags
+  else
+    @tag = nil
+  end
+  @tags = Tag.all()
+  @ingredients = Ingredient.all()
+  erb(:recipe)
+end
+
+patch("/recipes/:id") do
+  tag_id = params.fetch("tag_id").to_i()
+  tag = Tag.find(tag_id)
+  @recipe = Recipe.find(params.fetch("id").to_i())
+  # @recipe.update({:tag_ids => [tag_id]})
+  @recipe.tags.push(tag)
+  redirect back
+end
+
+patch("/recipes/:id/ingredients") do
+  ingredient = params.fetch("ingredient").to_i()
+  ingredient  = Ingredient.find(ingredient)
+  ingredient.update({amount: params["amount"]})
+  @recipe = Recipe.find(params.fetch("id").to_i())
+  @recipe.ingredients.push(ingredient)
+  binding.pry
   redirect back
 end

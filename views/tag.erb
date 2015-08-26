@@ -1,13 +1,36 @@
 <h2>Tag: <%= @tag.description() %></h2>
 <hr>
 
-<% if @recipe %>
-  <h3> Currently tagged on: <%= @recipe.name %> </h3>
+<form action="/tags/<%= @tag.id %>/rename" method="post">
+  <input name="_method" type="hidden" value="patch">
+  <label for="description">Enter a new description:</label>
+  <input id="description" name="description" type="text">
+
+  <button type="submit">Update</button>
+</form>
+
+<form action="/tags/<%= @tag.id %>/delete" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete Tag</button>
+</form>
+
+<hr>
+
+
+<% if @tag.recipes.any? %>
+  <h3>Here are the recipes currently assigned to this tag:</h3>
+  <ul>
+    <% @tag.recipes.each() do |recipe_tag| %>
+      <li> <a href="/recipes/<%= recipe_tag.id() %>"><%= recipe_tag.name() %></a> </li>
+    <% end %>
+  </ul>
 
 <% else %>
-    <p><strong>Tag has not yet been assigned to a recipe.</strong></p>
+
+    <p><strong>There are currently no recipes assigned to this tag.</strong></p>
     <br>
-    <p><a href="/recipes">Add a recipe to the database</a></p>
+
 <% end %>
 
 <h4>Assign tag to a recipe:</h4>
