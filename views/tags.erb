@@ -1,0 +1,23 @@
+<h2>tags</h2>
+
+<% if @tags == [] %>
+
+  <p>You don't have a single tag, poor bastard!</p>
+
+  <% else %>
+
+  <p>View All THe Tags!</p>
+  <ul>
+    <% @tags.each() do |tag| %>
+      <li> <a href="/tags/<%= tag.id() %>"><%= tag.name() %></a> </li>
+    <% end %>
+
+  </ul>
+<% end %>
+
+<h3> Add a tag: </h3>
+<form action="/tags" method="post">
+  <label for="description">Tag Description:  </label>
+  <input type="text" name="description" id="description">
+  <button type="submit">Add Tag</button>
+</form>
