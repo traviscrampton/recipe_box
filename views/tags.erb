@@ -9,7 +9,7 @@
   <p>View All THe Tags!</p>
   <ul>
     <% @tags.each() do |tag| %>
-      <li> <a href="/tags/<%= tag.id() %>"><%= tag.name() %></a> </li>
+      <li> <a href="/tags/<%= tag.id() %>"><%= tag.description() %></a> </li>
     <% end %>
 
   </ul>
