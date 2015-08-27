@@ -58,7 +58,7 @@
     <select id="ingredient" name="ingredient">
       <option value=""></option>
       <% @ingredients.each() do |ingredient| %>
-        <option value="<%= ingredient.id() %>"><%= ingredient.kind() %></option>
+        <option value="<%= ingredient.kind() %>"><%= ingredient.kind() %></option>
       <% end %>
     </select>
 
@@ -111,4 +111,6 @@
 <br>
 <h3>Your current recipe for <%= @recipe.name %> is:</h3>
 <br>
-<%= @recipe.instructions %>
+<div style="margin-bottom:3rem;">  
+  <%= @recipe.instructions %>
+</div>

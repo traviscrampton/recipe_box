@@ -31,4 +31,14 @@
     <p><strong>There are currently no recipes that use this ingredient.</strong></p>
     <br>
 
+
 <% end %>
+
+
+    <!-- <% @thoserecipes = [] %>
+    <ul>
+      <% Ingredient.where(kind: @ingredient).find_each() do |recipe_ingredient| %>
+      <% @thoserecipes.push(recipe_ingredient) %>
+        <li> <a href="/recipes/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.kind() %></a> </li>
+      <% end %>
+    </ul> -->

@@ -108,7 +108,7 @@ patch("/tags/:id") do
   redirect back
 end
 
-delete('/tags/:id/delete') do
+get('/tags/:id/delete') do
 	@tag = Tag.find(params['id'].to_i)
 	@tag.destroy
 	@tags = Tag.all()
@@ -153,9 +153,8 @@ post("/recipes/:id/rating") do
 end
 
 patch("/recipes/:id/ingredients") do
-  ingredient = params.fetch("ingredient").to_i()
-  ingredient  = Ingredient.find(ingredient)
-  ingredient.update({amount: params["amount"], serving: params["serving"]})
+  kind = params.fetch("ingredient")
+  ingredient = Ingredient.create({kind: kind, amount: params["amount"], serving: params["serving"]})
   @recipe = Recipe.find(params.fetch("id").to_i())
   @recipe.ingredients.push(ingredient)
   redirect back
@@ -169,6 +168,12 @@ post("/recipes/:id/instructions") do
   redirect back
 end
 
+get('/recipes/:id/delete') do
+	@recipe = Recipe.find(params['id'].to_i)
+	@recipe.destroy
+	@recipes = Recipe.all()
+	erb(:recipes)
+end
 
 
 #############################
@@ -182,10 +187,12 @@ get('/ingredients/:id') do
     @recipe = nil
   end
   @recipes = Recipe.all()
+  @ingredients = Ingredient.all
+  # binding.pry
   erb(:ingredient)
 end
 
-delete('/ingredients/:id/delete') do
+get('/ingredients/:id/delete') do
 	@ingredient = Ingredient.find(params['id'].to_i)
 	@ingredient.destroy
 	@ingredients = Ingredient.all()

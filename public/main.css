@@ -19,3 +19,18 @@ ul {
   color:red;
   margin-left:2rem;
 }
+
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse {
+  text-align: center;
+}
+
+.nav li {
+  width:15rem; /*Fixes the width of all elements*/
+  margin-right:3rem;
+}
