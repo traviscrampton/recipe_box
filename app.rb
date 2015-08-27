@@ -39,6 +39,7 @@ end
 #############################
 get('/recipes') do
   @recipes = Recipe.all()
+  @recipes.order!(:rating, :name)
   erb(:recipes)
 end
 
@@ -136,7 +137,7 @@ get('/recipes/:id') do
   erb(:recipe)
 end
 
-patch("/recipes/:id") do
+patch("/recipes/:id/tag") do
   tag_id = params.fetch("tag_id").to_i()
   tag = Tag.find(tag_id)
   @recipe = Recipe.find(params.fetch("id").to_i())

@@ -9,7 +9,7 @@
   <p>View All The Recipes!</p>
   <ul>
     <% @recipes.each() do |recipe| %>
-      <li> <a href="/recipes/<%= recipe.id() %>"><%= recipe.name() %></a> <a class = "remover" href="/recipes/<%= recipe.id() %>/delete">Delete <%= recipe.name() %></a></li>
+    <li> <a href="/recipes/<%= recipe.id() %>"><%= recipe.name() %></a>, rated as: <%= recipe.rating() %> stars <a class = "remover" href="/recipes/<%= recipe.id() %>/delete">Delete <%= recipe.name() %></a></li>
     <% end %>
 
   </ul>

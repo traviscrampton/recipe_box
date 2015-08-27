@@ -33,7 +33,7 @@
 <% end %>
 
 <p>Add a tag to this recipe:<p>
-<form id="add_tag_id" action="/recipes/<%= @recipe.id() %>/rate" method="post">
+<form id="add_tag_id" action="/recipes/<%= @recipe.id() %>/tag" method="post">
   <input name="_method" type="hidden" value="patch">
   <input type="hidden" name="recipe_id" id="recipe_id" value="<%= @recipe.id() %>">
   <label for="tag_id">Select a tag:  </label>
