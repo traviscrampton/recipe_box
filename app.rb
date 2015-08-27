@@ -23,6 +23,13 @@ post("/tags") do
   redirect("/tags")
 end
 
+get('/tags/:id/delete_from_tags') do
+	@tag = Tag.find(params['id'].to_i)
+	@tag.destroy
+	@tags = Tag.all()
+	erb(:tags)
+end
+
 
 ##########################
 #####___Clear-Tags___#####
@@ -49,6 +56,13 @@ post("/recipes") do
   redirect("/recipes")
 end
 
+get('/recipes/:id/delete_from_recipes') do
+	@recipe = Recipe.find(params['id'].to_i)
+	@recipe.destroy
+	@recipes = Recipe.all()
+	erb(:recipes)
+end
+
 
 ##########################
 ####___Clear-Recipes___####
@@ -70,9 +84,18 @@ end
 
 post("/ingredients") do
   kind = params.fetch("kind")
-  Ingredient.create({:kind => kind, :amount => nil})
+  Ingredient.create({:kind => kind})
+  Amount.create({:amount => nil, :serving => nil})
   redirect("/ingredients")
 end
+
+get('/ingredients/:id/delete_from_ingredients') do
+	@ingredient = Ingredient.find(params['id'].to_i)
+	@ingredient.destroy
+	@ingredients = Ingredient.all()
+	erb(:ingredients)
+end
+
 
 
 ##########################
@@ -108,7 +131,7 @@ patch("/tags/:id") do
   redirect back
 end
 
-get('/tags/:id/delete') do
+delete('/tags/:id/delete') do
 	@tag = Tag.find(params['id'].to_i)
 	@tag.destroy
 	@tags = Tag.all()
@@ -154,9 +177,10 @@ end
 
 patch("/recipes/:id/ingredients") do
   kind = params.fetch("ingredient")
-  ingredient = Ingredient.create({kind: kind, amount: params["amount"], serving: params["serving"]})
+  @ingredient = Ingredient.create({kind: kind})
+  amount = Amount.create({amount: params["amount"], serving: params["serving"], ingredient_id: @ingredient.id()})
   @recipe = Recipe.find(params.fetch("id").to_i())
-  @recipe.ingredients.push(ingredient)
+  @recipe.ingredients.push(@ingredient)
   redirect back
 end
 
@@ -168,7 +192,7 @@ post("/recipes/:id/instructions") do
   redirect back
 end
 
-get('/recipes/:id/delete') do
+delete('/recipes/:id/delete') do
 	@recipe = Recipe.find(params['id'].to_i)
 	@recipe.destroy
 	@recipes = Recipe.all()
@@ -192,7 +216,7 @@ get('/ingredients/:id') do
   erb(:ingredient)
 end
 
-get('/ingredients/:id/delete') do
+delete('/ingredients/:id/delete') do
 	@ingredient = Ingredient.find(params['id'].to_i)
 	@ingredient.destroy
 	@ingredients = Ingredient.all()

@@ -16,6 +16,13 @@
 </form>
 <hr>
 
+<form action="/recipes/<%= @recipe.id %>/delete" method="post">
+  <input name="_method" type="hidden" value="delete">
+
+  <button type="submit">Delete Recipe</button>
+</form>
+
+
 <% if @recipe.tags.any? %>
   <h3>Here are the tags currently assigned to this recipe:</h3>
   <ul>
@@ -81,8 +88,7 @@
   <h3>Here are the ingredients currently assigned to this recipe:</h3>
   <ul>
     <% @recipe.ingredients.each() do |recipe_ingredient| %>
-      <li> <a href="/ingredients/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.amount() %> <%= recipe_ingredient.serving() %> of <%= recipe_ingredient.kind() %></a> </li>
-
+      <li> <a href="/ingredients/<%= recipe_ingredient.id() %>"><%= recipe_ingredient.kind() %></a> </li>
     <% end %>
   </ul>
 
@@ -111,6 +117,6 @@
 <br>
 <h3>Your current recipe for <%= @recipe.name %> is:</h3>
 <br>
-<div style="margin-bottom:3rem;">  
+<div style="margin-bottom:3rem;">
   <%= @recipe.instructions %>
 </div>
