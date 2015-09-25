@@ -1,6 +1,6 @@
 ###Recipe Box
 
-### An Application that lines up bands and venues, 08/28/2015
+### An Application that allows users to save lists of ingredients and maket them into a recipe list 08/28/2015
 
 ### By Travis Crampton & Christoff Perlinger
 
